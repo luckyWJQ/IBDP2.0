@@ -719,7 +719,6 @@
 			
 				//determine selected step
 				//wizard.selectedItem().step
-			
 		
 			
 				//documentation : http://docs.jquery.com/Plugins/Validation/validate
