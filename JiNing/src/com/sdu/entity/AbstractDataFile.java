@@ -116,8 +116,7 @@ public abstract class AbstractDataFile implements Serializable {
 	public void setD_project(Project d_project) {
 		this.d_project = d_project;
 	}
-	
-	
-	
-	
+	/*public String toString(){
+		return "{id:'"+this.d_id+"',name:'"+this.d_name+"',projectName:'"+this.getD_project().getP_name()+"',type:'"+this.d_type+"',size:'"+this.d_size+"',uploadDate:'"+this.d_createTime+"'}";
+	}*/
 }

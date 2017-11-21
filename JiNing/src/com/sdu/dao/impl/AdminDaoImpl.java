@@ -31,7 +31,7 @@ public class AdminDaoImpl {
 		   
 		   return list;
 	   }
-	   public Admin getById(String adminId){
+	   public Admin getById(int adminId){
 		   List<Admin> list ;
 		   Session session = sessionFactory.getCurrentSession();
 		   Transaction tx = session.beginTransaction();

@@ -5,13 +5,13 @@
 <constant name='struts.custom.i18n.resources' value="FileUploadError" />
 <constant name="struts.multipart.maxSize" value="9000000000"/> 
 <package name="dowork" extends="struts-default,json-default" namespace="/">
- <interceptors>
+<!-- <interceptors>
    <interceptor-stack name="myStack">
     <interceptor-ref name="json"></interceptor-ref>
     <interceptor-ref name="defaultStack" />  
    </interceptor-stack>
   </interceptors>
-  <default-interceptor-ref name="myStack" />
+  <default-interceptor-ref name="myStack" /> -->
   
 <action name="doworkAction" class="com.sdu.action.doworkAction">
 <param name="savePath">/MyUploadFile</param>
@@ -125,12 +125,6 @@
 <action name="Logout" class="userAction" method="logout">
 <result name="success">/login.jsp</result>
 </action>
-<!-- 文件上传 -->
-<action name="fileUpload" class="com.sdu.action.fileUpload">
-	 <result name="success" type="json">
-	 	<param name="root">result</param>
-	 </result>
-</action>
 <!-- modelAction -->
 <action name="Model_*" class="com.sdu.action.ModelAction" method="{1}" >
 	<result name="success" type="json">
@@ -143,13 +137,19 @@
 		<param name="root">map</param>
 	</result>
 </action>
+<!-- adviceAction -->
+<action name="Advice_*" class="com.sdu.action.AdviceAction" method="{1}">
+	<result name="success" type="json">
+		<param name="root">map</param>
+	</result>
+</action>
 <!-- dataFileAction -->
 <action name="DataFile_*" class="com.sdu.action.DataFileAction" method="{1}">
 	<result name="saveSuccess" type="json">
 		<param name="root">map</param>
 	</result>
 	<result name="getSuccess" type="json">
-		<param name="root">list</param>
+		<param name="root">map</param>
 	</result>
 	<result name="delSuccess" type="json">
 		<param name="root">map</param>
@@ -164,13 +164,6 @@
 		<param name="inputName">downFile</param>
 		<param name="bufferSize">2048</param>
 	</result>
-</action>
-<!-- 加载数据 -->
-
-<action name="getList" class="com.sdu.action.getListAction">
-	 <result name="success" type="json">
-	 	<param name="root">list</param>
-	 </result>
 </action>
 <!-- data file action -->
 <!--  ajax更新中间提交页面-->

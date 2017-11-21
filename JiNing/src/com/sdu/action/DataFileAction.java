@@ -13,8 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.struts2.ServletActionContext;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.sdu.biz.impl.DataFileBizImpl;
 import com.sdu.entity.Admin;
@@ -30,7 +32,7 @@ public class DataFileAction extends ActionSupport{
 	private DataFile dataFile;
 	private DataFileBizImpl dataFileBiz;
 	//自己new
-	private List<DataFile> list;
+/*	private String datafileJson;*/
 	private	Map<String,Object> map;
 	//由前台赋值
 	private File uploadFile;	//struts本身封装的inputfile属性，file值可以直接从前台得到
@@ -49,6 +51,9 @@ public class DataFileAction extends ActionSupport{
 	public File getUploadFile() {
 		return uploadFile;
 	}
+/*	public String getDatafileJson() {
+		return datafileJson;
+	}*/
 	public int getFileid() {
 		return fileid;
 	}
@@ -123,14 +128,6 @@ public class DataFileAction extends ActionSupport{
 	public void setDataFileBiz(DataFileBizImpl dataFileBiz) {
 		this.dataFileBiz = dataFileBiz;
 	}
-	
-	
-	public void setList(List<DataFile> list) {
-		this.list = list;
-	}
-	public List<DataFile> getList() {
-		return list;
-	}
 	//------------------------------------------------------------------action
 	public String saveDataFile() throws IOException{
 		System.out.println("进入保存函数!");
@@ -155,7 +152,7 @@ public class DataFileAction extends ActionSupport{
 		dataFile.setD_localpath("D:/user/"+uploadFileFileName);
 		dataFile.setD_type("0");
 		dataFile.setD_createTime(new Date());
-		int d_id = dataFileBiz.save(dataFile,userid); 
+		int d_id = dataFileBiz.save(dataFile,Integer.parseInt(userid)); 
 		System.out.println("action中的d_id:"+d_id);
 		map = new HashMap<String,Object>();
 		map.put("message", "uploadSuccess!");
@@ -164,15 +161,27 @@ public class DataFileAction extends ActionSupport{
 	}
 	//不能写成getXxxxx会被封装成json发送到前台
 	public String showAllDataFiles(){
-		list  = new ArrayList<DataFile>();
-		List<DataFile> temp = dataFileBiz.getAllByUseId(1);
-		System.out.println("size:"+temp.size());
-		for(int i = 0;i<temp.size();i++){
-			temp.get(i);
-			System.out.println(temp.get(i).getD_id());
-			System.out.println("date:"+temp.get(i).getD_createTime());
-			list.add(temp.get(i));
+		System.out.println("11111111111111111");
+		List<Object> list = new ArrayList<>();
+		list = dataFileBiz.getAllByUseId(1);
+		JSONArray array = new JSONArray();
+		for(int i = 0;i<list.size();i++){
+			JSONObject jobj = new JSONObject();
+			Object[] obj = (Object[])list.get(i);
+			jobj.put("id",obj[0]);
+			jobj.put("name",obj[1]);
+			jobj.put("projectName", obj[2]);
+			jobj.put("type",obj[3]);
+			jobj.put("size",obj[4]);
+			jobj.put("uploadDate",obj[5]);
+			System.out.println("jobj");
+			System.out.println(jobj.toString());
+			array.put(jobj);
+			System.out.println("array:"+array.toString());
 		}
+		/*datafileJson =*/ 
+		map = new HashMap<String,Object>();
+		map.put("DataJson",array.toString());
 		return "getSuccess";
 	}
 	

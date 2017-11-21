@@ -8,7 +8,7 @@ public class Advice extends AbstractAdvice implements Serializable {
 	}
 
 	public Advice(Integer a_id, String a_name, String a_content, String a_time,
-			Boolean a_isread, String a_type, Admin advice_admin) {
+			String a_isread, String a_type, Admin advice_admin) {
 		super(a_id, a_name, a_content, a_time, a_isread, a_type, advice_admin);
 		
 	}
@@ -17,7 +17,5 @@ public class Advice extends AbstractAdvice implements Serializable {
 		super(a_id, a_name);
 		
 	}
-
-	
 	
 }

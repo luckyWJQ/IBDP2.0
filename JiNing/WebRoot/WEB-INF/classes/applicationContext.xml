@@ -116,4 +116,18 @@
 	<bean id="projectAction" class="com.sdu.action.ProjetAction">
 		<property name="projectBiz" ref="projectBiz"/>
 	</bean>
+	
+	<!-- 定义adviceDaoImpl -->
+	<bean id="adviceDao" class="com.sdu.dao.impl.AdviceDaoImpl">
+		<property name="sesssionFactory" ref="sessionFactory"/>
+	</bean>
+	<!-- 定义adviceBizImpl -->
+	<bean id="adviceBiz" class="com.sdu.biz.impl.AdviceBizImpl">
+		<property name="adviceDao" ref="adviceDao"/>
+		<property name="adminDao" ref="adminDao" />
+	</bean>
+	<!-- 定义adviceAction -->
+	<bean id="adviceAction" class="com.sdu.action.AdviceAction">
+		<property name="adviceBiz" ref="adviceBiz"/>
+	</bean>
 	<tx:annotation-driven transaction-manager="transactionManager" /></beans>

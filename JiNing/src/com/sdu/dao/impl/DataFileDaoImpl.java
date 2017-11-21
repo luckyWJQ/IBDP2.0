@@ -19,22 +19,24 @@ public class DataFileDaoImpl {
 		   this.sessionFactory = sessionFactory;
 	}
 	
-	public List<DataFile> getByUserId(int userid){
+	public List<Object> getByUserId(int userid){
 		Session session = sessionFactory.getCurrentSession();
 		Transaction tx = session.beginTransaction();
 		//hql没有分号结尾
 
 //		String hql = "from DataFile datafile where datafile.userid = '"+userid+"'";
-		List<DataFile> list = null;
+		List<Object> list = null;
 		try {
-			String hql = "from DataFile datafile ";
-			Query query = session.createQuery(hql);
+			String sql ="select d.d_id id ,d.d_name  name,p.p_name projectname,d.d_type type,d.d_size size,d.d_createTime uploadDate from datafile as d,project as p where d.pro_dataid = p.p_id and d.admin_dataid = '"+userid+"';";
+			Query query = session.createSQLQuery(sql);
 			list = query.list();
 			tx.commit();
 		} catch (HibernateException e) {
 			tx.rollback();
 			e.printStackTrace();
 		}
+		System.out.println("准备输出list.get(0)");
+		System.out.println(list.get(0));
 		return list;
 	}
 	public int saveDateFile(DataFile dataFile){

@@ -29,13 +29,13 @@ public class DataFileBizImpl {
 		return dataFileDao;
 	}
 
-	public List<DataFile> getAllByUseId(int userid){
+	public List<Object> getAllByUseId(int userid){
 		return dataFileDao.getByUserId(userid);
 	}
 	public boolean remove(int did){
 		return dataFileDao.removeById(did);
 	}
-	public int save(DataFile dataFile,String adminId){
+	public int save(DataFile dataFile,int adminId){
 		System.out.println("进入save函数");
 		Admin admin = adminDao.getById(adminId);
 		System.out.println("查询adminid成功");

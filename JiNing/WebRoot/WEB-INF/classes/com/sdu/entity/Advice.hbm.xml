@@ -19,7 +19,7 @@
         <property name="a_time" type="java.lang.String">
             <column name="a_time" />
         </property>
-        <property name="a_isread" type="java.lang.Boolean">
+        <property name="a_isread" type="java.lang.String">
             <column name="a_isread" />
         </property>
         <property name="a_type" type="java.lang.String">
