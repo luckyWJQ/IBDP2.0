@@ -3,7 +3,6 @@ package com.sdu.dao.impl;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.hadoop.hive.metastore.api.ThriftHiveMetastore.AsyncProcessor.abort_txn;
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;

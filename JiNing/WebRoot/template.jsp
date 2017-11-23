@@ -24,65 +24,14 @@
 							
 							<a data-toggle="dropdown" class="dropdown-toggle" style="width: 60px" href="#">
 								<i style="line-height:45px" class="ace-icon fa fa-arrow-circle-down fa-4"></i>
-								<span class="badge badge-grey">3</span>
+								<span id="messageCount" class="badge badge-grey">0</span>
 							</a>
 
-							<ul class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
+							<ul id="uploadMessage" class="dropdown-menu-right dropdown-navbar dropdown-menu dropdown-caret dropdown-close">
 								<li class="dropdown-header">
-									<i class="ace-icon fa fa-check"></i>
-									共有3个数据传输任务
-								</li>
-
-								<li class="dropdown-content">
-									<ul class="dropdown-menu dropdown-navbar">
-										<li>
-											<a href="#">
-												<div class="clearfix">
-													<span class="pull-left">auto.txt</span>
-													<span class="pull-right">65%</span>
-												</div>
-
-												<div class="progress progress-mini">
-													<div style="width:65%" class="progress-bar"></div>
-												</div>
-											</a>
-										</li>
-
-
-										<li>
-											<a href="#">
-												<div class="clearfix">
-													<span class="pull-left">blued.csv</span>
-													<span class="pull-right">15%</span>
-												</div>
-
-												<div class="progress progress-mini">
-													<div style="width:15%" class="progress-bar progress-bar-warning"></div>
-												</div>
-											</a>
-										</li>
-
-										<li>
-											<a href="#">
-												<div class="clearfix">
-													<span class="pull-left">water.csv</span>
-													<span class="pull-right">90%</span>
-												</div>
-
-												<div class="progress progress-mini progress-striped active">
-													<div style="width:90%" class="progress-bar progress-bar-success"></div>
-												</div>
-											</a>
-										</li>
-									</ul>
-								</li>
-
-								<li class="dropdown-footer">
-									<a href="#">
-										查看所有数据
-										<i class="ace-icon fa fa-arrow-right"></i>
-									</a>
-								</li>
+									<i class="ace-icon fa fa-check">
+									</i>暂时没有消息
+								</li>		
 							</ul>
 						</li>
 
@@ -200,3 +149,38 @@
 				</div>
 			</div><!-- /.navbar-container -->
 		</div>
+		<script src="assets/js/jquery-2.1.4.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+			window.setTimeout("queryUploadMessage()",1000);
+			window.setInterval("queryUploadMessage()",10000);
+		/* queryUploadMessage(); */
+	});
+	function queryUploadMessage(){
+		$.post("Advice_QueryNotRead.action",
+		{},function(data,status){
+			console.log("进入function");
+			if(data.count>0){
+				console.log("进入if");
+				console.log("upload:"+($("#dropdown_content").length<=0));
+				if($("#dropdown_content").length<=0){
+					$("#uploadMessage").empty();
+					$("#messageCount").text(data.count);
+					$("#uploadMessage").append("<li class='dropdown-header'><i class='ace-icon fa fa-check'></i>共完成"+data.count+"个数据传输任务</li>");
+					$("#uploadMessage").append("<li  id='dropdown_content'  class='dropdown-content'></li>");
+					$("#dropdown_content").append("<ul id='dropdown_menu' class='dropdown-menu dropdown-navbar'></ul>");
+				}
+				var i;
+				for( i = 0;i<data.count&& i<5;i++){
+					var message = JSON.parse(data.data);
+					if( $("#"+message[i].id).length<=0){
+						$("#dropdown_menu").append("<li id='"+message[i].id+"'><a href='datafile.jsp'><div class='clearfix'><span class='pull-left'><i class='btn btn-xs no-hover btn-pink fa fa-comment'>"+message[i].a_content+"</i></span></div></a><li>");
+					}
+				}
+				if(i ==5){
+					$("#uploadMessage").append("<li class='dropdown-footer'><a href='#'>查看所有消息<i class='ace-icon fa fa-arrow-right'></i></a></li>");
+				}
+			}
+		});
+	}
+</script>

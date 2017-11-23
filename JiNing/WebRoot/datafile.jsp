@@ -495,10 +495,10 @@
        
         $remove.click(function () {
             var ids = getIdSelections();
-            alert("ids=="+ids);
+            alert("ids========"+ids);
             $table.bootstrapTable('remove', {
                 field: 'name',
-                values: ids
+                values: ids  
             });
             //$remove.prop('disabled', true);
         });

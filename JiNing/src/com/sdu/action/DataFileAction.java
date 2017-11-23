@@ -130,6 +130,7 @@ public class DataFileAction extends ActionSupport{
 	}
 	//------------------------------------------------------------------action
 	public String saveDataFile() throws IOException{
+		String unit = "KB";
 		System.out.println("进入保存函数!");
 		System.out.println("userid:"+userid);
 		System.out.println("文件名:"+uploadFileFileName);
@@ -147,8 +148,17 @@ public class DataFileAction extends ActionSupport{
 			os.write(flush, 0, len);
 		}
 		is.close();
-		os.close();		
-		dataFile.setD_size(size+"KB");
+		os.close();	
+		if(size>1024){
+			size=size/1024.0;
+			unit = "MB";
+		}else if(size>1024*1024){
+			size = size /(1024*1024.0);
+			unit="GB";
+		}
+		String temp=size+"";
+		temp = temp.substring(0,temp.indexOf(".")+1);
+		dataFile.setD_size(temp+unit);
 		dataFile.setD_localpath("D:/user/"+uploadFileFileName);
 		dataFile.setD_type("0");
 		dataFile.setD_createTime(new Date());

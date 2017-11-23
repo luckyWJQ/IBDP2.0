@@ -73,7 +73,4 @@ public abstract class AbstractAdvice implements Serializable {
 	public void setAdvice_admin(Admin advice_admin) {
 		this.advice_admin = advice_admin;
 	}
-	public String toString(){
-		return "{id:'"+this.a_id+"',"+"name:'"+this.a_name+"',"+"content:'"+this.a_content+"',"+"time:'"+this.a_time+"',"+"isread:'"+this.a_isread+"',"+"type:'"+this.a_type+"'}";
-	}	
 }
